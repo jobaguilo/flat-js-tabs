@@ -1,5 +1,5 @@
 (function () {
-    let originalTitle = document.title;
+    const originalTitle = document.title;
     let currentTabId = Date.now();
     let isCurrentOnFocus = true;
     let otherIn = false;
@@ -38,23 +38,6 @@
                 //}
             }, 200);
         }
-      /*
-      if (e.data.status === 'changeTitle') {
-        // ¿redundante?
-        
-        setTimeout(() => {
-          // Si no estoy en focus y corresponde con la pestaña que tiene
-          // que cambiar el title sigún el mensaje
-            console.log(localStorage.getItem('onSite'));
-            if (!isCurrentOnFocus 
-                && localStorage.getItem('onSite')==='out'
-                && e.data.tabId === currentTabId
-            ){
-                console.log('onsite CT ' + localStorage.getItem('onSite'));
-                document.title = "Te echamos de menos...";
-            }
-        }, 200);
-      }*/
     });
   
     
@@ -62,7 +45,6 @@
       isCurrentOnFocus = true;
       setTimeout(() => {
         localStorage.setItem('onSite', 'in');
-        console.log('onsite current FO ' + localStorage.getItem('onSite'));
         setOriginalTitle();
         channel.postMessage({
             tabId: currentTabId,
@@ -73,37 +55,29 @@
     
     function handleBlur() {
       isCurrentOnFocus = false;
-      // Check the URL of the newly focused window/tab
-      //localStorage.setItem('onSite', 'out');
-      console.log('onsite BL ' + localStorage.getItem('onSite'));
     }
   
     function handleChange() {
-      if (document.visibilityState === 'hidden') {
-        //setTimeout(() => {
+        if (document.visibilityState === 'hidden') {
             localStorage.setItem('onSite', 'out');
-        //}, 300);
-        console.log('onsite CH HID ' + localStorage.getItem('onSite'));
-      }
-  
-      if (document.visibilityState === 'visible') {
-        localStorage.setItem('onSite', 'in');
-        console.log('onsite CH VIS ' + localStorage.getItem('onSite'));
-      }
-  
-      channel.postMessage({
-        tabId: currentTabId,
-        status: document.visibilityState
-      });
+        }
 
-      if (document.visibilityState === 'hidden') {
-        setTimeout(() => {
-          if (localStorage.getItem('onSite')==='out' && !otherIn) {
-            console.log(localStorage.getItem('onSite') + 'entro cambio');
-            document.title = "Te echamos de menos...";
-          }
-        }, 100);
-      }
+        if (document.visibilityState === 'visible') {
+            localStorage.setItem('onSite', 'in');
+        }
+
+        channel.postMessage({
+            tabId: currentTabId,
+            status: document.visibilityState
+        });
+
+        if (document.visibilityState === 'hidden') {
+            setTimeout(() => {
+                if (localStorage.getItem('onSite')==='out' && !otherIn) {
+                    document.title = "Te echamos de menos...";
+                }
+            }, 100);
+        }
     }
   
     document.addEventListener("focus", handleFocus);
