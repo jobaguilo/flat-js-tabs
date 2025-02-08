@@ -1,0 +1,11 @@
+{
+  "name": "flat",
+  "version": "1.0.0",
+  "main": "index.html",
+  "scripts": {
+    "start": "lite-server"
+  },
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
