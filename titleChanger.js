@@ -38,7 +38,7 @@
             tabId: currentTabId,
             status: document.visibilityState
         });
-        }, 300);
+        }, 100);
     }
     
     function handleBlur() {
@@ -64,7 +64,7 @@
                 if (localStorage.getItem('onSite')==='out' && !otherIn) {
                     document.title = "Te echamos de menos...";
                 }
-            }, 100);
+            }, 50);
         }
     }
   
