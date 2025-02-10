@@ -12,8 +12,6 @@
     
     channel.addEventListener("message", e => {
         
-        // Recibo un mensaje de otra. O visible o ha cambiado después de esta,
-        // por tanto tienen que tener título original
         setOriginalTitle();
 
         if (e.data.status === 'visible') {
@@ -21,9 +19,6 @@
             localStorage.setItem('onSite', 'in');
         } 
         
-        // Recibo mensaje de otra cambia a hidden
-        // Espero para ver si otra se ha marcado a activa, y si no, 
-        // ésa última que ha emitido el mensaje debe cambiar el título
         if (e.data.status === 'hidden') {
             otherIn = false;
         }
