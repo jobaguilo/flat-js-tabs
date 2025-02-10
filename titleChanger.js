@@ -1,7 +1,6 @@
 (function () {
     const originalTitle = document.title;
     let currentTabId = Date.now();
-    let isCurrentOnFocus = true;
     let otherIn = false;
   
     const channel = new BroadcastChannel("flatSnippet");
@@ -25,7 +24,6 @@
     });
   
     function handleFocus() {
-      isCurrentOnFocus = true;
       setTimeout(() => {
         localStorage.setItem('onSite', 'in');
         setOriginalTitle();
@@ -34,10 +32,6 @@
             status: document.visibilityState
         });
         }, 100);
-    }
-    
-    function handleBlur() {
-      isCurrentOnFocus = false;
     }
   
     function handleChange() {
@@ -64,6 +58,5 @@
     }
   
     document.addEventListener("focus", handleFocus);
-    document.addEventListener("blur", handleBlur);
     document.addEventListener("visibilitychange", handleChange);
   })();
